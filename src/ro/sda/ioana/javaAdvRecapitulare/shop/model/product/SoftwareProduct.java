@@ -17,6 +17,8 @@ public abstract class SoftwareProduct implements Sellable{
     private String licenseType;
     private String releasedBy;
 
+//TODO: add validation on fields
+
     public SoftwareProduct(boolean receivedOnMail, boolean sentOnDvdDisk, String licenseType, String releasedBy) {
         this.receivedOnMail = receivedOnMail;
         this.sentOnDvdDisk = sentOnDvdDisk;

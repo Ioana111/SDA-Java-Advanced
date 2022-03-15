@@ -1,5 +1,6 @@
 package ro.sda.ioana.javaAdvRecapitulare.shop.model.product;
 
+import ro.sda.ioana.javaAdvRecapitulare.shop.exceptions.InvalidProductDataException;
 import ro.sda.ioana.javaAdvRecapitulare.shop.model.Currency;
 
 import java.util.Date;
@@ -28,10 +29,26 @@ public class GroceryProduct extends FoodProduct {
             String description
     ) {
         super(expirationDate, isBio, countryOfOrigin);
-        this.price = price;
-        this.currency = currency;
-        this.name = name;
-        this.description = description;
+        if (price > 0) {
+            this.price = price;
+        } else {
+            throw new InvalidProductDataException("Price is not valid");
+        }
+        if (currency != null) {
+            this.currency = currency;
+        }else {
+            throw new InvalidProductDataException("There's no currency");
+        }
+        if(name != null && !name.isBlank()){
+            this.name = name;
+        }else {
+            throw new InvalidProductDataException("There's no name");
+        }
+        if(description != null && !description.isBlank()) {
+            this.description = description;
+        }else {
+            throw new InvalidProductDataException("There's no description");
+        }
     }
 
     @Override

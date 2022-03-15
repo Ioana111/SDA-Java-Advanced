@@ -1,5 +1,7 @@
 package ro.sda.ioana.javaAdvRecapitulare.shop.model.product;
 
+import ro.sda.ioana.javaAdvRecapitulare.shop.exceptions.InvalidProductDataException;
+
 import java.util.Date;
 
 public abstract class FoodProduct implements Sellable {
@@ -9,9 +11,18 @@ public abstract class FoodProduct implements Sellable {
     private String countryOfOrigin;
 
     public FoodProduct(Date expirationDate, boolean isBio, String countryOfOrigin) {
-        this.expirationDate = expirationDate;
+        if (expirationDate != null && expirationDate.after(new Date())) {
+            this.expirationDate = expirationDate;
+        } else {
+            throw new InvalidProductDataException("Product is expired!");
+        }
         this.isBio = isBio;
-        this.countryOfOrigin = countryOfOrigin;
+        if (countryOfOrigin != null && !countryOfOrigin.isBlank()) {
+            this.countryOfOrigin = countryOfOrigin;
+        }else {
+            throw new InvalidProductDataException("Product does not have an origin country.");
+        }
+
     }
 
     @Override
